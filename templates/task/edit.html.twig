@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit task{% endblock %}
+
+{% block body %}
+    <div class="form-group col text-center p-5">
+        <h1>Edit task</h1>
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+        {{ form_row(form.name, {'label': 'Task name', 'attr': {'class': 'form-control mb-3'}}) }}
+        {{ form_row(form.save, { 'label': 'Save' }) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
