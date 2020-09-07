@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\DTO\TaskDTO;
 use App\Entity\Task;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -36,16 +37,21 @@ class TaskController extends AbstractController
 
         $request->request->get('new_task');
 
-        if($request->get('name') != null){
-            $task->setName($request->get('name'));
-            $task->setDate(new \DateTime());
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($task);
-            $entityManager->flush();
-
-            return $this->redirectToRoute('tasks');
+        if ($request->get('name') == null) {
+            throw $this->createNotFoundException(
+                'No name found'
+            );
         }
+
+        $task->setDate(new \DateTime());
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($task);
+        $entityManager->flush();
+        $task->setName($request->get('name'));
+
+        return $this->redirectToRoute('tasks');
+
     }
 
     /**
